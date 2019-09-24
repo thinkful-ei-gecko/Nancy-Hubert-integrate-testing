@@ -14,6 +14,12 @@ app.get('/apps', (req, res) => {
 
   let filteredApps = [...store];
 
+  if ('genres' in req.query) {
+    if(!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genres)) {
+      return res.status(400).send('Must specify valid genre');
+    }
+  }
+
   if (genres) {
     filteredApps = store.filter(app =>
       app.Genres.toLowerCase().includes(genres.toLowerCase())
@@ -21,7 +27,6 @@ app.get('/apps', (req, res) => {
   }
 
   if ('sort' in req.query) {
-    console.log('sort has no value');
     if (!['Rating', 'App'].includes(sort)) {
       return res.status(400).send('Must sort on rating or app name');
     }
