@@ -7,6 +7,15 @@ describe('GET /apps', () => {
         return supertest(app)
             .get('/apps')
             .expect(200)
+            .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.an.lengthOf.at.least(1)
+                const apps = res.body[0];
+                expect(apps).to.include.all.keys(
+                    'Type', 'Price', 'Installs'
+                )
+            })
            
     })
     it('should check if the keys are present', () => {
