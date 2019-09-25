@@ -21,9 +21,9 @@ app.get('/apps', (req, res) => {
   }
 
   if (genres) {
-    filteredApps = store.filter(app =>
-      app.Genres.toLowerCase().includes(genres.toLowerCase())
-    );
+    filteredApps = store.filter(app => {
+      return app.Genres.toLowerCase().includes(genres.toLowerCase()) //=== genres 
+    });
   }
 
   if ('sort' in req.query) {
@@ -41,6 +41,4 @@ app.get('/apps', (req, res) => {
   res.json(filteredApps);
 });
 
-app.listen(8000, () => {
-  console.log('listening');
-});
+module.exports = app
